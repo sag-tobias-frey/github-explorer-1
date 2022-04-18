@@ -112,6 +112,8 @@ module.exports = {
                     },
                 ],
 
+                'implicit-arrow-linebreak': 'off',
+
                 'import/extensions': 'off',
                 'import/no-cycle': 'error',
                 'import/no-named-as-default': 'off',
