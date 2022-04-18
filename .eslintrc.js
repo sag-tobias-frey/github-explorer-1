@@ -120,6 +120,7 @@ module.exports = {
 
                 indent: 'off',
                 'linebreak-style': 'off',
+                'max-len': 'off',
 
                 'no-plusplus': [2, { allowForLoopAfterthoughts: true }],
                 'no-void': ['error', { allowAsStatement: true }],
