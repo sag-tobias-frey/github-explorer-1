@@ -132,5 +132,11 @@ module.exports = {
                 'object-curly-newline': 'off',
             },
         },
+        {
+            files: ['**/*.test.ts?(x)'],
+            rules: {
+                'import/no-extraneous-dependencies': 'off',
+            },
+        },
     ],
 };
