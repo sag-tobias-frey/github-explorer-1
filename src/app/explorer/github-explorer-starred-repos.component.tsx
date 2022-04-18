@@ -19,7 +19,7 @@ export const GithubExplorerStarredRepos: React.FC<GithubExplorerStarredReposProp
     const {
         filteredLanguages,
         barProps: { items, farItems },
-    } = useGithubExplorerCommandBar(availableLanguages, selectedRepos, actions);
+    } = useGithubExplorerCommandBar(availableLanguages, selectedRepos, actions, { hideStar: true });
 
     const tableItems = useMemo(() => {
         if (starredRepos == null) {
