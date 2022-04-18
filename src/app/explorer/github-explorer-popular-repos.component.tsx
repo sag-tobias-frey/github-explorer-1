@@ -1,11 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { CommandBar, Selection, Spinner, SpinnerSize } from '@fluentui/react';
+import { CommandBar, Spinner, SpinnerSize } from '@fluentui/react';
 import { memoComponent } from '../../util/memo-component';
-import { GithubRepo, GithubReposResponse } from '../../api/github-repos.types';
+import { GithubReposResponse } from '../../api/github-repos.types';
 import { getGithubPopularRepos } from '../../api/github-repos.requests';
 import { useLocalStarredRepos } from '../../util/local-storage.hooks';
 import { GithubExplorerRepoList } from './github-explorer.repo-list.component';
 import { useGithubExplorerCommandBar } from './hooks/github-explorer.command-bar.hook';
+import { useRepoSelection } from './hooks/github-explorer.selection.hook';
 
 export interface GithubExplorerPopularReposProps {}
 
@@ -15,15 +16,7 @@ export const GithubExplorerPopularRepos: React.FC<GithubExplorerPopularReposProp
     const [repos, setRepos] = useState<GithubReposResponse>();
     const [error, setError] = useState<unknown>();
 
-    const [selectedRepos, setSelectedRepos] = useState<GithubRepo[]>([]);
-    const [tableSelection] = useState(
-        () =>
-            new Selection({
-                onSelectionChanged() {
-                    setSelectedRepos(tableSelection.getSelection() as GithubRepo[]);
-                },
-            }),
-    );
+    const { selectedRepos, tableSelection } = useRepoSelection();
 
     const availableLanguages = useMemo(() => {
         return Array.from(new Set(repos?.items.map((item) => item.language)));
