@@ -8,6 +8,13 @@ export interface GithubExplorerRepoListProps {
     selection?: ISelection<GithubRepo>;
 }
 
+export const renderRepoLanguage = (language?: string) => {
+    if (language == null || language.trim().length === 0) {
+        return '<Undetected>';
+    }
+    return language;
+};
+
 const TABLE_COLUMNS: IColumn[] = [
     {
         key: 'name',
@@ -40,6 +47,13 @@ const TABLE_COLUMNS: IColumn[] = [
         fieldName: 'language',
         minWidth: 100,
         maxWidth: 200,
+        onRenderField(props, def) {
+            if (props == null || def == null) {
+                return null;
+            }
+
+            return def({ ...props, item: { ...props.item, language: renderRepoLanguage(props.item.language) } });
+        },
     },
     {
         key: 'stars',
