@@ -5,7 +5,7 @@ import { GithubRepo, GithubReposResponse } from '../../api/github-repos.types';
 import { getGithubPopularRepos } from '../../api/github-repos.requests';
 import { useLocalStarredRepos } from '../../util/local-storage.hooks';
 import { GithubExplorerRepoList } from './github-explorer.repo-list.component';
-import { useGithubExplorerCommandBar } from './github-explorer.command-bar.hook';
+import { useGithubExplorerCommandBar } from './hooks/github-explorer.command-bar.hook';
 
 export interface GithubExplorerPopularReposProps {}
 

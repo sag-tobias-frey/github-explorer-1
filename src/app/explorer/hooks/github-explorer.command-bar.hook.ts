@@ -1,8 +1,8 @@
 import { ICommandBarItemProps } from '@fluentui/react';
 import { useMemo, useState } from 'react';
-import { renderRepoLanguage } from './github-explorer.repo-list.component';
-import { GithubRepo } from '../../api/github-repos.types';
-import type { useLocalStarredRepos } from '../../util/local-storage.hooks';
+import { renderRepoLanguage } from '../github-explorer.repo-list.component';
+import { GithubRepo } from '../../../api/github-repos.types';
+import type { useLocalStarredRepos } from '../../../util/local-storage.hooks';
 
 export const useGithubExplorerCommandBar = (
     availableLanguages: string[],

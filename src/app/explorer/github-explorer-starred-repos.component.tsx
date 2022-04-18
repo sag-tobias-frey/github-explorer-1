@@ -3,7 +3,7 @@ import { CommandBar } from '@fluentui/react';
 import { memoComponent } from '../../util/memo-component';
 import { GithubExplorerRepoList } from './github-explorer.repo-list.component';
 import { useLocalStarredRepos } from '../../util/local-storage.hooks';
-import { useGithubExplorerCommandBar } from './github-explorer.command-bar.hook';
+import { useGithubExplorerCommandBar } from './hooks/github-explorer.command-bar.hook';
 
 export interface GithubExplorerStarredReposProps {}
 
