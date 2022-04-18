@@ -7,7 +7,7 @@ import type { useLocalStarredRepos } from '../../util/local-storage.hooks';
 export const useGithubExplorerCommandBar = (
     availableLanguages: string[],
     selectedRepos: GithubRepo[],
-    addStarredRepo: ReturnType<typeof useLocalStarredRepos>['actions']['addStarredRepo'],
+    { addStarredRepo, deleteStarredRepo }: ReturnType<typeof useLocalStarredRepos>['actions'],
 ) => {
     const [filteredLanguages, setFilteredLanguages] = useState(() => new Set<string>());
 
@@ -15,17 +15,28 @@ export const useGithubExplorerCommandBar = (
         return [
             {
                 key: 'star_repo',
-                text: 'Star repo',
+                text: 'Star',
                 disabled: selectedRepos?.length <= 0,
                 iconProps: {
-                    iconName: 'FavoriteStar',
+                    iconName: 'FavoriteStarFill',
                 },
                 onClick() {
                     selectedRepos.forEach(addStarredRepo);
                 },
             },
+            {
+                key: 'unstar_repo',
+                text: 'Unstar',
+                disabled: selectedRepos?.length <= 0,
+                iconProps: {
+                    iconName: 'FavoriteStar',
+                },
+                onClick() {
+                    selectedRepos.forEach(deleteStarredRepo);
+                },
+            },
         ];
-    }, [addStarredRepo, selectedRepos]);
+    }, [addStarredRepo, deleteStarredRepo, selectedRepos]);
 
     const languageFilterItem = useMemo<ICommandBarItemProps>(
         () => ({

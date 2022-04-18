@@ -29,15 +29,12 @@ export const GithubExplorerPopularRepos: React.FC<GithubExplorerPopularReposProp
         return Array.from(new Set(repos?.items.map((item) => item.language)));
     }, [repos?.items]);
 
-    const {
-        actions: { addStarredRepo },
-        isStarredRepo,
-    } = useLocalStarredRepos();
+    const { actions, isStarredRepo } = useLocalStarredRepos();
 
     const {
         filteredLanguages,
         barProps: { items, farItems },
-    } = useGithubExplorerCommandBar(availableLanguages, selectedRepos, addStarredRepo);
+    } = useGithubExplorerCommandBar(availableLanguages, selectedRepos, actions);
 
     const tableItems = useMemo(() => {
         if (repos == null) {
