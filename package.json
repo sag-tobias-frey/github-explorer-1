@@ -1,6 +1,6 @@
 {
-  "name": "react-starter",
-  "homepage": "react-starter/",
+  "name": "github-explorer",
+  "homepage": "github-explorer/",
   "version": "1.0.0",
   "private": true,
   "dependencies": {
