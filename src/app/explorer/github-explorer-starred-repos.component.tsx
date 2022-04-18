@@ -4,19 +4,22 @@ import { memoComponent } from '../../util/memo-component';
 import { GithubExplorerRepoList } from './github-explorer.repo-list.component';
 import { useLocalStarredRepos } from '../../util/local-storage.hooks';
 import { useGithubExplorerCommandBar } from './hooks/github-explorer.command-bar.hook';
+import { useRepoSelection } from './hooks/github-explorer.selection.hook';
 
 export interface GithubExplorerStarredReposProps {}
 
 export const GithubExplorerStarredRepos: React.FC<GithubExplorerStarredReposProps> = memoComponent('GithubExplorerStarredRepos', () => {
     const { actions, starredRepos } = useLocalStarredRepos();
+    const { selectedRepos, tableSelection } = useRepoSelection();
+
     const availableLanguages = useMemo(() => {
         return Array.from(new Set(starredRepos.map((item) => item.language)));
     }, [starredRepos]);
 
     const {
         filteredLanguages,
-        barProps: { farItems },
-    } = useGithubExplorerCommandBar(availableLanguages, [], actions);
+        barProps: { items, farItems },
+    } = useGithubExplorerCommandBar(availableLanguages, selectedRepos, actions);
 
     const tableItems = useMemo(() => {
         if (starredRepos == null) {
@@ -31,8 +34,8 @@ export const GithubExplorerStarredRepos: React.FC<GithubExplorerStarredReposProp
 
     return (
         <div style={{ paddingTop: 8 }}>
-            <CommandBar items={[]} farItems={farItems} />
-            <GithubExplorerRepoList items={tableItems} />
+            <CommandBar items={items} farItems={farItems} />
+            <GithubExplorerRepoList items={tableItems} selection={tableSelection} />
         </div>
     );
 });
