@@ -16,9 +16,9 @@ module.exports = {
                 trailingComma: 'all',
                 bracketSpacing: true,
                 bracketSameLine: true,
-                semi: true
-            }
-        ]
+                semi: true,
+            },
+        ],
     },
 
     overrides: [
@@ -27,17 +27,17 @@ module.exports = {
                 'airbnb',
                 'plugin:@typescript-eslint/recommended',
                 'plugin:@typescript-eslint/recommended-requiring-type-checking',
-                'plugin:import/typescript'
+                'plugin:import/typescript',
             ],
             files: ['**/*.ts?(x)'],
             parser: '@typescript-eslint/parser',
             parserOptions: {
                 ecmaFeatures: {
-                    jsx: true
+                    jsx: true,
                 },
                 ecmaVersion: 2018,
                 sourceType: 'module',
-                project: './tsconfig.json'
+                project: './tsconfig.json',
             },
             plugins: ['@typescript-eslint'],
             rules: {
@@ -47,10 +47,10 @@ module.exports = {
                         format: ['camelCase', 'PascalCase', 'UPPER_CASE'],
                         filter: {
                             regex: '^(unstable)?_',
-                            match: false
+                            match: false,
                         },
-                        selector: ['variable']
-                    }
+                        selector: ['variable'],
+                    },
                 ],
                 '@typescript-eslint/explicit-function-return-type': 'off',
                 '@typescript-eslint/explicit-member-accessibility': 'off',
@@ -60,8 +60,8 @@ module.exports = {
                 '@typescript-eslint/no-floating-promises': [
                     'error',
                     {
-                        ignoreVoid: true
-                    }
+                        ignoreVoid: true,
+                    },
                 ],
                 '@typescript-eslint/no-non-null-assertion': 'off',
                 '@typescript-eslint/no-unsafe-argument': 'off',
@@ -80,15 +80,15 @@ module.exports = {
                     'error',
                     {
                         namedComponents: 'arrow-function',
-                        unnamedComponents: 'arrow-function'
-                    }
+                        unnamedComponents: 'arrow-function',
+                    },
                 ],
                 'react/jsx-closing-bracket-location': [
                     'error',
                     {
                         nonEmpty: 'after-props',
-                        selfClosing: 'tag-aligned'
-                    }
+                        selfClosing: 'tag-aligned',
+                    },
                 ],
                 'react/jsx-curly-newline': 'off',
                 'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx', '.tsx', '.ts'] }],
@@ -101,15 +101,15 @@ module.exports = {
                 'react/no-unstable-nested-components': [
                     'error',
                     {
-                        allowAsProps: true
-                    }
+                        allowAsProps: true,
+                    },
                 ],
                 'react-hooks/exhaustive-deps': [
                     'warn',
                     {
                         additionalHooks: '^.*WithDeps$',
-                        enableDangerousAutofixThisMayCauseInfiniteLoops: true
-                    }
+                        enableDangerousAutofixThisMayCauseInfiniteLoops: true,
+                    },
                 ],
 
                 'import/extensions': 'off',
@@ -126,8 +126,8 @@ module.exports = {
                 'no-console': 'error',
                 'no-continue': 'off',
 
-                'object-curly-newline': 'off'
-            }
-        }
-    ]
+                'object-curly-newline': 'off',
+            },
+        },
+    ],
 };
