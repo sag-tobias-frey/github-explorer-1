@@ -1,4 +1,4 @@
-import { DetailsList, DetailsListLayoutMode, IColumn, ISelection, Link } from '@fluentui/react';
+import { DetailsList, DetailsListLayoutMode, IColumn, ISelection, Link, SelectionMode } from '@fluentui/react';
 import React from 'react';
 import { memoComponent } from '../../util/memo-component';
 import { GithubRepo } from '../../api/github-repos.types';
@@ -79,6 +79,7 @@ export const GithubExplorerRepoList = memoComponent('GithubExplorerRepoList', ({
             columns={TABLE_COLUMNS}
             items={items}
             layoutMode={DetailsListLayoutMode.justified}
+            selectionMode={selection == null ? SelectionMode.none : SelectionMode.multiple}
             selection={selection}
             styles={TABLE_STYLES}
         />
