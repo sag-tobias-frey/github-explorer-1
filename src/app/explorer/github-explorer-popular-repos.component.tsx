@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { DetailsList, DetailsListLayoutMode, IColumn, Link, Spinner, SpinnerSize } from '@fluentui/react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { CommandBar, DetailsList, DetailsListLayoutMode, IColumn, Link, Selection, Spinner, SpinnerSize } from '@fluentui/react';
 import { memoComponent } from '../../util/memo-component';
-import { GithubReposResponse } from '../../api/github-repos.types';
+import { GithubRepo, GithubReposResponse } from '../../api/github-repos.types';
 import { getGithubPopularRepos } from '../../api/github-repos.requests';
+import { useLocalStarredRepos } from '../../util/local-storage.hooks';
 
 export interface GithubExplorerPopularReposProps {}
 
@@ -20,7 +21,11 @@ const TABLE_COLUMNS: IColumn[] = [
                 return null;
             }
 
-            return <Link href={props.item.html_url}>{def(props)} </Link>;
+            return (
+                <Link href={props.item.html_url} key={props.item.id}>
+                    {def(props)}
+                </Link>
+            );
         },
     },
     {
@@ -58,6 +63,13 @@ const TABLE_COLUMNS: IColumn[] = [
         minWidth: 50,
         maxWidth: 100,
     },
+    {
+        key: 'is_local_starred',
+        name: 'Starred',
+        fieldName: 'isLocalStarred',
+        minWidth: 50,
+        maxWidth: 100,
+    },
 ];
 
 const TABLE_STYLES = {};
@@ -65,6 +77,29 @@ const TABLE_STYLES = {};
 export const GithubExplorerPopularRepos: React.FC<GithubExplorerPopularReposProps> = memoComponent('GithubExplorerPopularRepos', () => {
     const [repos, setRepos] = useState<GithubReposResponse>();
     const [error, setError] = useState<unknown>();
+
+    const [selectedRepos, setSelectedRepos] = useState<GithubRepo[]>([]);
+    const [tableSelection] = useState(
+        () =>
+            new Selection({
+                onSelectionChanged() {
+                    setSelectedRepos(tableSelection.getSelection() as GithubRepo[]);
+                },
+            }),
+    );
+
+    const {
+        actions: { addStarredRepo },
+        isStarredRepo,
+    } = useLocalStarredRepos();
+
+    const tableItems = useMemo(() => {
+        if (repos == null) {
+            return [];
+        }
+
+        return repos.items.map((repo) => ({ ...repo, isLocalStarred: isStarredRepo(repo) }));
+    }, [isStarredRepo, repos]);
 
     useEffect(() => {
         void getGithubPopularRepos(new Date(Date.now() - ONE_WEEK_IN_MILLIS).getTime())
@@ -86,11 +121,29 @@ export const GithubExplorerPopularRepos: React.FC<GithubExplorerPopularReposProp
     }
 
     return (
-        <DetailsList
-            columns={TABLE_COLUMNS}
-            items={repos?.items ?? []}
-            layoutMode={DetailsListLayoutMode.justified}
-            styles={TABLE_STYLES}
-        />
+        <div style={{ paddingTop: 8 }}>
+            <CommandBar
+                items={[
+                    {
+                        key: 'star_repo',
+                        text: 'Star repo',
+                        disabled: selectedRepos?.length <= 0,
+                        iconProps: {
+                            iconName: 'FavoriteStar',
+                        },
+                        onClick() {
+                            selectedRepos.forEach(addStarredRepo);
+                        },
+                    },
+                ]}
+            />
+            <DetailsList
+                columns={TABLE_COLUMNS}
+                items={tableItems}
+                layoutMode={DetailsListLayoutMode.justified}
+                selection={tableSelection}
+                styles={TABLE_STYLES}
+            />
+        </div>
     );
 });
