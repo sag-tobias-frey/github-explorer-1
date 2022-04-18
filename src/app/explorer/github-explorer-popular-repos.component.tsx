@@ -68,7 +68,12 @@ export const GithubExplorerPopularRepos: React.FC<GithubExplorerPopularReposProp
 
     useEffect(() => {
         void getGithubPopularRepos(new Date(Date.now() - ONE_WEEK_IN_MILLIS).getTime())
-            .then(setRepos)
+            .then((reposResponse) => {
+                setRepos({
+                    ...reposResponse,
+                    items: reposResponse.items.sort((repo1, repo2) => repo2.stargazers_count - repo1.stargazers_count),
+                });
+            })
             .catch(setError);
     }, []);
 
