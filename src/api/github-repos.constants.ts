@@ -10,7 +10,7 @@ export function getGithubPopularReposApiUrl(fromMillis?: number): string {
             return `0${num}`;
         }
 
-        return `${num};`;
+        return `${num}`;
     }
 
     const baseUrl = `${GITHUB_REPOS_URL}?sort=stars&order=desc`;
